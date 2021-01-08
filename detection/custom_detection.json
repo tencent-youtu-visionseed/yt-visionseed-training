@@ -1,0 +1,74 @@
+{
+    "label": "detection model",
+    "vendor": "开源社区",
+    "firmware": "v1.3.2",
+    "pre":
+    {
+        "type": "full"
+    },
+    "forward":
+    {
+        "input":
+        {
+            "width": 512,
+            "height": 288,
+            "channel": 3,
+            "format": "RGB",
+            "channel_padding": true,
+            "bias": [0, 0, 0],
+            "scale": 0.00392157 
+        },
+        "inner":
+        {
+            "output_do_padding_reverse": 0
+        },
+        "output":
+        {
+            "width": 20,
+            "height": 255,
+            "channel": 20
+        }
+    },
+    "configurable":
+    {
+        "max_num_of_rect":
+        {
+            "label": "输出框数量限制",
+            "default": 16,
+            "range": [0, 16],
+            "type": "int"
+        }
+    },
+    "_process":
+    {
+        "type": "mask",
+        "auto_save": true
+    },
+    "process": {
+      "type": "yolo",
+      "version": 5,
+      "need_sigmoid_exp": false,
+      "anchors": [
+        {
+          "type": "yolo",
+          "step": 32,
+          "boxes": [
+            [81,82], 
+            [135,169],
+            [344,319]
+          ]
+        }
+      ],
+      "local_nms_thd": 0.45,
+      "final_thd": 0.2,
+      "init_thd": 0.2,
+      "class_num": 80,
+      "cord_num": 4
+    },
+    "post":
+    {
+        "cacheable": false,
+        "datatype": "fp16",
+        "interface": null
+    }
+}
